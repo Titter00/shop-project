@@ -72,3 +72,81 @@
   background-color: red;
   transform: rotate(90deg);
 }
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0px;
+  font-size: 4rem;
+  gap: 2rem;
+
+  &__title {
+    font-size: 4.5rem;
+    letter-spacing: 0.1rem;
+  }
+
+  &__items {
+    display: flex;
+    gap: 2rem;
+  }
+
+  &__items button {
+    font-size: 2rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 15px;
+    background: none;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &__items button:hover {
+    color: white;
+    background-color: #4bb39a;
+    cursor: pointer;
+  }
+
+  &__items button.active {
+    color: white;
+    background-color: #4bb39a;
+    cursor: pointer;
+  }
+}
+
+.products {
+  display: flex;
+  gap: 1rem;
+  margin: 5rem 10rem 0 10rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.product {
+  width: 300px;
+  display: flex;
+
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  // border: 1px solid black;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  &__name {
+    font-size: 2.5rem;
+  }
+
+  &__price {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  &__button .add-to-basket {
+    font-size: 1.8rem;
+    border-radius: 15px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+}
+.product img {
+  width: 15rem;
+  height: 20rem;
+  object-fit: contain;
+}
