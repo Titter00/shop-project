@@ -1,0 +1,17 @@
+{
+  "name": "shop-project",
+  "version": "1.0.0",
+  "description": "",
+  "default": "./src/js/script.js",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.2",
+    "node-sass": "^8.0.0",
+    "parcel": "^2.8.2"
+  },
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
+  },
+  "author": "Oliwer",
+  "license": "ISC"
+}
