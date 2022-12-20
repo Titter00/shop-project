@@ -46,8 +46,24 @@ const data = [
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
 const searchInput = document.querySelector(".header__search-input");
-let currentProduct;
+let addToBasketButtons;
 const basket = [];
+
+const addToBasket = (e) => {
+  const productId = e.target.dataset.id;
+
+  const key = data.findIndex((product) => product.id === productId);
+
+  basket.push(data.at(key));
+
+  const totalPrice = basket.reduce((sum, product) => {
+    return (sum += product.price);
+  }, 0);
+
+  const basketAmount = document.querySelector(".header__basket__amount");
+
+  basketAmount.innerHTML = `${totalPrice} zł`;
+};
 
 const displayItems = (items) => {
   items.forEach((item) => {
@@ -64,6 +80,8 @@ const displayItems = (items) => {
 
     productContainer.insertAdjacentHTML("beforeend", html);
   });
+  addToBasketButtons = document.querySelectorAll(".add-to-basket");
+  addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
 };
 
 displayItems(data);
@@ -104,22 +122,3 @@ categoriesContainer.addEventListener("click", (e) => {
     ? displayItems(data)
     : displayItems(data.filter((item) => item.cat === selectedCategory));
 });
-
-const addToBasketButtons = document.querySelectorAll(".add-to-basket");
-const addToBasket = (e) => {
-  const productId = +e.target.dataset.id;
-
-  const key = data.findIndex((product) => product.id === productId);
-
-  basket.push(data.at(key));
-
-  const totalPrice = basket.reduce((sum, product) => {
-    return (sum += product.price);
-  }, 0);
-
-  const basketAmount = document.querySelector(".header__basket__amount");
-
-  basketAmount.innerHTML = totalPrice;
-};
-
-addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
