@@ -44,6 +44,8 @@ const data = [
 ];
 
 const productContainer = document.querySelector(".products");
+const categoriesContainer = document.querySelector(".categories__items");
+const searchInput = document.querySelector(".header__search-input");
 
 const displayItems = (items) => {
   items.forEach((item) => {
@@ -58,8 +60,36 @@ const displayItems = (items) => {
         </div>
     `;
 
-    productContainer.insertAdjacentHTML("afterbegin", html);
+    productContainer.insertAdjacentHTML("beforeend", html);
   });
 };
 
 displayItems(data);
+
+const renderCateogires = () => {
+  const allCategories = data.map((item) => item.cat);
+
+  const categories = [
+    "Wszystkie",
+    ...allCategories.filter((item, i) => {
+      return allCategories.indexOf(item) === i;
+    }),
+  ];
+  categories.forEach((cat) => {
+    const html = `
+    <button>${cat}</button>`;
+
+    categoriesContainer.insertAdjacentHTML("beforeend", html);
+  });
+};
+
+renderCateogires();
+
+searchInput.addEventListener("keyup", (e) => {
+  productContainer.innerHTML = "";
+  const value = e.target.value.toLowerCase();
+
+  value
+    ? displayItems(data.filter((item) => item.name.toLowerCase().indexOf(value) !== -1))
+    : displayItems(data);
+});

@@ -80,6 +80,7 @@
 
 .categories {
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   margin: 20px 0px;
@@ -140,6 +141,7 @@
 }
 .products {
   display: flex;
+  flex: 2;
   gap: 1rem;
   margin: 5rem 10rem 0 10rem;
   flex-wrap: wrap;
