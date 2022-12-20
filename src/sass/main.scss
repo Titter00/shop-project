@@ -148,7 +148,7 @@
 .product {
   width: 300px;
   display: flex;
-
+  border-radius: 15px;
   flex-direction: column;
   gap: 1rem;
   align-items: center;
@@ -157,7 +157,8 @@
   transition: transform 0.3s;
 
   &__name {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    text-align: center;
   }
 
   &__price {
@@ -172,7 +173,7 @@
     margin-bottom: 1rem;
   }
 }
-.product img {
+.product__img {
   width: 15rem;
   height: 20rem;
   object-fit: contain;

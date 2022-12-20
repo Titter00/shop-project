@@ -7,38 +7,59 @@ const data = [
     cat: "Dress",
   },
   {
-    id: 11,
+    id: 2,
     name: "Invicta Men's Pro Diver 2",
-    img: "https://m.media-amazon.com/images/I/71e04Q53xlL._AC_UY879_.jpg",
+    img: "./images/laptop.jpg",
     price: 74,
     cat: "Dress",
   },
   {
-    id: 2,
+    id: 3,
     name: "Timex Men's Expedition Scout ",
-    img: "https://m.media-amazon.com/images/I/91WvnZ1g40L._AC_UY879_.jpg",
+    img: "./images/laptop.jpg",
     price: 40,
     cat: "Sport",
   },
   {
-    id: 3,
+    id: 4,
     name: "Breitling Superocean Heritage",
-    img: "https://m.media-amazon.com/images/I/61hGDiWBU8L._AC_UY879_.jpg",
+    img: "./images/laptop.jpg",
     price: 200,
     cat: "Luxury",
   },
   {
-    id: 4,
+    id: 5,
     name: "Casio Classic Resin Strap ",
-    img: "https://m.media-amazon.com/images/I/51Nk5SEBARL._AC_UY879_.jpg",
+    img: "./images/laptop.jpg",
     price: 16,
     cat: "Sport",
   },
   {
-    id: 5,
+    id: 6,
     name: "Garmin Venu Smartwatch ",
-    img: "https://m.media-amazon.com/images/I/51kyjYuOZhL._AC_SL1000_.jpg",
+    img: "./images/R.jpg",
     price: 74,
     cat: "Casual",
   },
 ];
+
+const productContainer = document.querySelector(".products");
+
+const displayItems = (items) => {
+  items.forEach((item) => {
+    const html = `
+    <div class="product">
+          <img class="product__img" src="${item.img}" alt="Watch image" />
+          <span class="product__name">${item.name}</span>
+          <span class="product__price">${item.price} zł</span>
+          <div class="product__button">
+            <button class="add-to-basket">Dodaj do koszyka</button>
+          </div>
+        </div>
+    `;
+
+    productContainer.insertAdjacentHTML("afterbegin", html);
+  });
+};
+
+displayItems(data);
