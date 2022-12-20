@@ -46,6 +46,8 @@ const data = [
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
 const searchInput = document.querySelector(".header__search-input");
+let currentProduct;
+const basket = [];
 
 const displayItems = (items) => {
   items.forEach((item) => {
@@ -55,7 +57,7 @@ const displayItems = (items) => {
           <span class="product__name">${item.name}</span>
           <span class="product__price">${item.price} zł</span>
           <div class="product__button">
-            <button class="add-to-basket">Dodaj do koszyka</button>
+            <button data-id="${item.id}" class="add-to-basket">Dodaj do koszyka</button>
           </div>
         </div>
     `;
@@ -93,3 +95,31 @@ searchInput.addEventListener("keyup", (e) => {
     ? displayItems(data.filter((item) => item.name.toLowerCase().indexOf(value) !== -1))
     : displayItems(data);
 });
+
+categoriesContainer.addEventListener("click", (e) => {
+  productContainer.innerHTML = "";
+  const selectedCategory = e.target.textContent;
+
+  selectedCategory === "Wszystkie"
+    ? displayItems(data)
+    : displayItems(data.filter((item) => item.cat === selectedCategory));
+});
+
+const addToBasketButtons = document.querySelectorAll(".add-to-basket");
+const addToBasket = (e) => {
+  const productId = +e.target.dataset.id;
+
+  const key = data.findIndex((product) => product.id === productId);
+
+  basket.push(data.at(key));
+
+  const totalPrice = basket.reduce((sum, product) => {
+    return (sum += product.price);
+  }, 0);
+
+  const basketAmount = document.querySelector(".header__basket__amount");
+
+  basketAmount.innerHTML = totalPrice;
+};
+
+addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
