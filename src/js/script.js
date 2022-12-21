@@ -46,21 +46,25 @@ const data = [
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
 const searchInput = document.querySelector(".header__search-input");
+const basketAmount = document.querySelector(".header__basket__amount");
+const basketClearBtn = document.querySelector(".header__basket-clear");
 let addToBasketButtons;
-const basket = [];
+let basket = [];
 
 const addToBasket = (e) => {
   const productId = e.target.dataset.id;
 
-  const key = data.findIndex((product) => product.id === productId);
-
+  const key = data.findIndex((product) => productId === product.id);
+  console.log(key);
   basket.push(data.at(key));
 
   const totalPrice = basket.reduce((sum, product) => {
     return (sum += product.price);
   }, 0);
 
-  const basketAmount = document.querySelector(".header__basket__amount");
+  totalPrice > 0
+    ? basketClearBtn.classList.add("active")
+    : basketClearBtn.classList.remove("active");
 
   basketAmount.innerHTML = `${totalPrice} zł`;
 };
@@ -104,6 +108,13 @@ const renderCateogires = () => {
 };
 
 renderCateogires();
+
+const clearBtn = () => {
+  basketAmount.innerHTML = "Koszyk";
+  basket = [];
+};
+
+basketClearBtn.addEventListener("click", clearBtn);
 
 searchInput.addEventListener("keyup", (e) => {
   productContainer.innerHTML = "";
