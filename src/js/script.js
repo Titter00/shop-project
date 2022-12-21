@@ -48,6 +48,9 @@ const categoriesContainer = document.querySelector(".categories__items");
 const searchInput = document.querySelector(".header__search-input");
 const basketAmount = document.querySelector(".header__basket__amount");
 const basketClearBtn = document.querySelector(".header__basket-clear");
+const priceRange = document.querySelector(".price__range");
+const priceValue = document.querySelector(".price__value");
+
 let addToBasketButtons;
 let basket = [];
 
@@ -88,7 +91,7 @@ const displayItems = (items) => {
   addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
 };
 
-displayItems(data);
+// displayItems(data);
 
 const renderCateogires = () => {
   const allCategories = data.map((item) => item.cat);
@@ -109,6 +112,25 @@ const renderCateogires = () => {
 
 renderCateogires();
 
+const rangePrice = () => {
+  const priceList = data.map((item) => item.price);
+  const minPrice = Math.min(...priceList);
+  const maxPrice = Math.max(...priceList);
+
+  priceRange.min = minPrice;
+  priceRange.max = maxPrice;
+  priceRange.value = maxPrice;
+  priceValue.textContent = maxPrice + "zł";
+
+  priceRange.addEventListener("input", (e) => {
+    productContainer.innerHTML = "";
+    priceValue.textContent = e.target.value + "zł";
+
+    displayItems(data.filter((item) => item.price <= e.target.value));
+  });
+};
+
+rangePrice();
 const clearBtn = () => {
   basketAmount.innerHTML = "Koszyk";
   basket = [];
