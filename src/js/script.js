@@ -79,6 +79,7 @@ const displayItems = (items) => {
           <img class="product__img" src="${item.img}" alt="Watch image" />
           <span class="product__name">${item.name}</span>
           <span class="product__price">${item.price} zł</span>
+          <span class="product__info"></span>
           <div class="product__button">
             <button data-id="${item.id}" class="add-to-basket">Dodaj do koszyka</button>
           </div>
@@ -90,9 +91,7 @@ const displayItems = (items) => {
   addToBasketButtons = document.querySelectorAll(".add-to-basket");
   addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
 };
-
-// displayItems(data);
-
+displayItems(data);
 const renderCateogires = () => {
   const allCategories = data.map((item) => item.cat);
 
