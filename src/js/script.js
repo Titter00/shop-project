@@ -50,9 +50,24 @@ const basketAmount = document.querySelector(".header__basket__amount");
 const basketClearBtn = document.querySelector(".header__basket-clear");
 const priceRange = document.querySelector(".price__range");
 const priceValue = document.querySelector(".price__value");
+const header = document.querySelector(".header");
 
 let addToBasketButtons;
 let basket = [];
+const headerHeight = header.getBoundingClientRect().height;
+
+const stickyHeader = (entires) => {
+  const [entry] = entires;
+
+  if (!entry.isIntersecting) header.classList.add("sticky");
+};
+
+const headerObserver = new IntersectionObserver(stickyHeader, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${headerHeight}px`,
+});
+headerObserver.observe(header);
 
 const addToBasket = (e) => {
   const productId = e.target.dataset.id;
