@@ -23,7 +23,7 @@ const data = [
   {
     id: 4,
     name: "Breitling Superocean Heritage",
-    img: "./images/laptop.jpg",
+    img: "../images/laptop.jpg",
     price: 200,
     cat: "Luxury",
   },
@@ -46,8 +46,8 @@ const data = [
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
 const searchInput = document.querySelector(".header__search-input");
-const basketAmount = document.querySelector(".header__basket__amount");
-const basketClearBtn = document.querySelector(".header__basket-clear");
+const basketAmount = document.querySelector(".header__list__amount");
+const basketClearBtn = document.querySelector(".header__list-clear");
 const priceRange = document.querySelector(".price__range");
 const priceValue = document.querySelector(".price__value");
 const header = document.querySelector(".header");
@@ -106,7 +106,9 @@ const displayItems = (items) => {
   addToBasketButtons = document.querySelectorAll(".add-to-basket");
   addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
 };
+
 displayItems(data);
+
 const renderCateogires = () => {
   const allCategories = data.map((item) => item.cat);
 
