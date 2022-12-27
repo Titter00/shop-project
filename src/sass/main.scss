@@ -13,6 +13,7 @@ body {
 @media only screen and (min-width: 1300px) {
   .container {
     display: flex;
+    margin: auto 10rem;
   }
 }
 .header {
@@ -25,6 +26,15 @@ body {
   padding: 3rem;
   font-size: 4rem;
   gap: 2rem;
+
+  &__container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+  }
+
   &__title span {
     font-size: 2rem;
     color: #d90429;
@@ -41,12 +51,14 @@ body {
     align-items: center;
 
     &__icon {
-      background-color: transparent;
+      border: 1px solid white;
       padding: 0.2rem 0.5rem;
       display: flex;
       border-top-right-radius: 1.5rem;
       border-bottom-right-radius: 1.5rem;
       cursor: pointer;
+      height: 3.5rem;
+      background-color: white;
     }
 
     &-input {
@@ -104,7 +116,7 @@ body {
   width: 8rem;
   height: 0.3rem;
   // position: absolute;
-  background-color: darkblue;
+  background-color: #d90429;
   transform: rotate(90deg);
 }
 
@@ -168,7 +180,12 @@ body {
 
     &__title {
       font-size: 2.6rem;
-      background-color: green;
+
+      & > span {
+        color: #d90429;
+        font-size: 2.2rem;
+        text-transform: uppercase;
+      }
     }
   }
 }
@@ -183,8 +200,10 @@ body {
 }
 .product {
   background-color: #edf2f4;
-  width: 300px;
+  width: 30rem;
+  height: 30rem;
   display: flex;
+  justify-content: space-around;
   position: relative;
   border-radius: 15px;
   flex-direction: column;
@@ -214,8 +233,8 @@ body {
   }
 }
 .product__img {
-  width: 15rem;
-  height: 20rem;
+  width: 14rem;
+  height: 10rem;
 }
 .product__info {
   width: 10rem;
