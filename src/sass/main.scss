@@ -75,6 +75,7 @@ body {
   &__icons {
     display: flex;
     gap: 1rem;
+    width: 30rem;
   }
 
   &__list {
@@ -84,6 +85,11 @@ body {
     font-size: 3rem;
     font-weight: 500;
     gap: 1rem;
+
+    &__amount {
+      display: flex;
+      width: max-content;
+    }
 
     &__icon {
       width: 3.5rem;
@@ -261,8 +267,8 @@ body {
 
 .price {
   &__range {
-    -webkit-appearance: none;
-    -webkit-transition: 0.2s;
+    appearance: none;
+    transition: 0.2s;
     outline: none;
     border-radius: 15px;
     background-color: #d90429;
