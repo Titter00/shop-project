@@ -194,9 +194,10 @@ body {
   position: relative;
   flex: 2;
   gap: 1.5rem;
-  margin: 5rem 10rem 0 10rem;
+  margin: 3rem 10rem 0 10rem;
   flex-wrap: wrap;
   justify-content: center;
+  overflow-y: hidden;
 }
 .product {
   background-color: #edf2f4;
@@ -230,6 +231,7 @@ body {
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 2px solid #d90429;
+    cursor: pointer;
   }
 }
 .product__img {
@@ -255,4 +257,14 @@ body {
 .product:hover {
   transform: translateY(-8px);
   overflow: hidden;
+}
+
+.price {
+  &__range {
+    -webkit-appearance: none;
+    -webkit-transition: 0.2s;
+    outline: none;
+    border-radius: 15px;
+    background-color: #d90429;
+  }
 }
