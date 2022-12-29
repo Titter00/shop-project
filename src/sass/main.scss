@@ -13,7 +13,7 @@ body {
 @media only screen and (min-width: 1300px) {
   .container {
     display: flex;
-    margin: auto 10rem;
+    margin: 2rem 10rem;
   }
 }
 .header {
@@ -120,7 +120,7 @@ body {
 .header__search::after {
   content: "";
   width: 8rem;
-  height: 0.3rem;
+  height: 0.15rem;
   // position: absolute;
   background-color: #d90429;
   transform: rotate(90deg);
@@ -136,8 +136,14 @@ body {
   gap: 2rem;
 
   &__title {
-    font-size: 4.5rem;
+    font-size: 2.5rem;
     letter-spacing: 0.1rem;
+
+    & > span {
+      color: #d90429;
+      font-size: 3.2rem;
+      text-transform: uppercase;
+    }
   }
 
   &__items {
@@ -189,7 +195,7 @@ body {
 
       & > span {
         color: #d90429;
-        font-size: 2.2rem;
+        font-size: 3.2rem;
         text-transform: uppercase;
       }
     }
@@ -200,15 +206,14 @@ body {
   position: relative;
   flex: 2;
   gap: 1.5rem;
-  margin: 3rem 10rem 0 10rem;
+  margin: 3rem 7rem 0 7rem;
   flex-wrap: wrap;
   justify-content: center;
-  overflow-y: hidden;
 }
 .product {
   background-color: #edf2f4;
   width: 30rem;
-  height: 30rem;
+  height: 32rem;
   display: flex;
   justify-content: space-around;
   position: relative;
@@ -245,9 +250,10 @@ body {
   height: 10rem;
 }
 .product__info {
-  width: 10rem;
-  height: 10rem;
+  width: 6rem;
+  height: 6.5rem;
   background-color: #d90429;
+  color: white;
   position: absolute;
   top: -3rem;
   right: -3rem;
@@ -256,8 +262,8 @@ body {
 }
 
 .product__info:hover {
-  width: 45%;
-  height: 40%;
+  width: 25%;
+  height: 27%;
 }
 
 .product:hover {
