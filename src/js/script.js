@@ -13,6 +13,7 @@ const data = [
     price: 2649,
     cat: "Gaming",
   },
+
   {
     id: 3,
     name: "Reolink RLC-811A 8Mpix bullet ",
@@ -20,7 +21,6 @@ const data = [
     price: 700,
     cat: "Home",
   },
-
   {
     id: 4,
     name: "Kamera GoPro Hero 10 czarna",
@@ -28,6 +28,7 @@ const data = [
     price: 2051.99,
     cat: "Foto and Camera",
   },
+
   {
     id: 5,
     name: "Telewizor Samsung QE75Q80BAT QLED 75'' 4K Ultra HD Tizen ",
