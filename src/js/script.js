@@ -72,15 +72,17 @@ const headerObserver = new IntersectionObserver(stickyHeader, {
 headerObserver.observe(header);
 
 const addToBasket = (e) => {
-  const productId = e.target.dataset.id;
-
-  const key = data.findIndex((product) => productId === product.id);
+  const productId = parseInt(e.target.dataset.id);
+  console.log(productId);
+  const key = data.findIndex((product) => product.id == productId);
   console.log(key);
-  basket.push(data.at(key));
+  basket.push(data.at(key)).toFixed(2);
 
-  const totalPrice = basket.reduce((sum, product) => {
-    return (sum += product.price);
-  }, 0);
+  const totalPrice = basket
+    .reduce((sum, product) => {
+      return (sum += product.price);
+    }, 0)
+    .toFixed(2);
 
   totalPrice > 0
     ? basketClearBtn.classList.add("active")
