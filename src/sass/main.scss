@@ -1,9 +1,11 @@
-@import "./pages/sections";
+@import "./abstracts/animations";
+@import "./abstracts/variables";
+@import "./base/base";
+
 @import "./layout/header";
 @import "./layout/footer";
 @import "./layout/product";
-@import "./base/base";
-@import "./abstracts/animations";
+@import "./pages/sections";
 
 @media only screen and (min-width: 1300px) {
   .container {
@@ -33,7 +35,7 @@
       font-size: 2.6rem;
 
       & > span {
-        color: #d90429;
+        color: $colorPrimary;
         font-size: 3.2rem;
         text-transform: uppercase;
       }

@@ -1,49 +1,4 @@
-const data = [
-  {
-    id: 1,
-    name: "Laptop Gigabyte G5 KD-52EE123SD ",
-    img: "gigabyte.jpg",
-    price: 3999,
-    cat: "Computers",
-  },
-  {
-    id: 2,
-    name: "Next Level Racing Kokpit GTTrack (NLR-S009)",
-    img: "gaming.jpg",
-    price: 2649,
-    cat: "Gaming",
-  },
-
-  {
-    id: 3,
-    name: "Reolink RLC-811A 8Mpix bullet ",
-    img: "monitoring.jpg",
-    price: 700,
-    cat: "Home",
-  },
-  {
-    id: 4,
-    name: "Kamera GoPro Hero 10 czarna",
-    img: "gopro.jpg",
-    price: 2051.99,
-    cat: "Foto and Camera",
-  },
-
-  {
-    id: 5,
-    name: "Telewizor Samsung QE75Q80BAT QLED 75'' 4K Ultra HD Tizen ",
-    img: "tv.jpg",
-    price: 6399.99,
-    cat: "TV",
-  },
-  {
-    id: 6,
-    name: "Klawiatura SteelSeries Apex 3 TKL ",
-    img: "klawka.jpg",
-    price: 217,
-    cat: "Gaming",
-  },
-];
+import { data } from "./data.js";
 
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
@@ -57,19 +12,22 @@ const header = document.querySelector(".header");
 let addToBasketButtons;
 let basket = [];
 const headerHeight = header.getBoundingClientRect().height;
-
+//
 const stickyHeader = (entires) => {
   const [entry] = entires;
 
   if (!entry.isIntersecting) header.classList.add("sticky");
 };
-
+//
+//
 const headerObserver = new IntersectionObserver(stickyHeader, {
   root: null,
   threshold: 0,
   rootMargin: `-${headerHeight}px`,
 });
 headerObserver.observe(header);
+//
+//
 
 const addToBasket = (e) => {
   const productId = parseInt(e.target.dataset.id);
@@ -90,6 +48,8 @@ const addToBasket = (e) => {
 
   basketAmount.innerHTML = `${totalPrice} zł`;
 };
+//
+//
 
 const displayItems = (items) => {
   items.forEach((item) => {
@@ -110,9 +70,9 @@ const displayItems = (items) => {
   addToBasketButtons = document.querySelectorAll(".add-to-basket");
   addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
 };
+//
 
-displayItems(data);
-
+//
 const renderCateogires = () => {
   const allCategories = data.map((item) => item.cat);
 
@@ -129,9 +89,9 @@ const renderCateogires = () => {
     categoriesContainer.insertAdjacentHTML("beforeend", html);
   });
 };
+//
 
-renderCateogires();
-
+//
 const rangePrice = () => {
   const priceList = data.map((item) => item.price);
   const minPrice = Math.min(...priceList);
@@ -149,8 +109,8 @@ const rangePrice = () => {
     displayItems(data.filter((item) => item.price <= e.target.value));
   });
 };
+//
 
-rangePrice();
 const clearBtn = () => {
   basketAmount.innerHTML = "Koszyk";
   basket = [];
@@ -175,3 +135,11 @@ categoriesContainer.addEventListener("click", (e) => {
     ? displayItems(data)
     : displayItems(data.filter((item) => item.cat === selectedCategory));
 });
+
+const init = () => {
+  displayItems(data);
+  renderCateogires();
+  rangePrice();
+};
+
+init();

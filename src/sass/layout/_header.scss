@@ -4,10 +4,15 @@
   display: flex;
   justify-content: center;
   position: relative;
-
   padding: 3rem;
   font-size: 4rem;
   gap: 2rem;
+
+  &.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 
   &__container {
     display: flex;
@@ -19,7 +24,7 @@
 
   &__title span {
     font-size: 2rem;
-    color: #d90429;
+    color: $colorPrimary;
   }
 
   &__icons {
@@ -31,6 +36,14 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
+
+    &::after {
+      content: "";
+      width: 8rem;
+      height: 0.15rem;
+      background-color: $colorPrimary;
+      transform: rotate(90deg);
+    }
 
     &__icon {
       border: 1px solid white;
@@ -92,18 +105,4 @@
       display: block;
     }
   }
-}
-
-.header.sticky {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-.header__search::after {
-  content: "";
-  width: 8rem;
-  height: 0.15rem;
-  // position: absolute;
-  background-color: #d90429;
-  transform: rotate(90deg);
 }
