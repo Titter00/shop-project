@@ -1,1 +1,18 @@
+@keyframes animate {
+  0% {
+    background-position-x: 0;
+  }
 
+  100% {
+    background-position-x: 2000px;
+  }
+}
+@keyframes animate2 {
+  0% {
+    background-position-x: 0;
+  }
+
+  100% {
+    background-position-x: -2000px;
+  }
+}
