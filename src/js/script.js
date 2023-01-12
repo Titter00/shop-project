@@ -1,4 +1,5 @@
 import { data } from "./data.js";
+import { state, getSearchResultPage } from "./pagination";
 
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
@@ -12,6 +13,7 @@ const header = document.querySelector(".header");
 let addToBasketButtons;
 let basket = [];
 const headerHeight = header.getBoundingClientRect().height;
+console.log(state, getSearchResultPage(data, 3));
 //
 const stickyHeader = (entires) => {
   const [entry] = entires;
@@ -32,7 +34,7 @@ headerObserver.observe(header);
 const addToBasket = (e) => {
   const productId = parseInt(e.target.dataset.id);
   console.log(productId);
-  const key = data.findIndex((product) => product.id == productId);
+  const key = data.findIndex((product) => product.id === productId);
   console.log(key);
   basket.push(data.at(key)).toFixed(2);
 
@@ -52,6 +54,7 @@ const addToBasket = (e) => {
 //
 
 const displayItems = (items) => {
+  productContainer.innerHTML = "";
   items.forEach((item) => {
     const html = `
     <div class="product">
@@ -67,6 +70,7 @@ const displayItems = (items) => {
 
     productContainer.insertAdjacentHTML("beforeend", html);
   });
+
   addToBasketButtons = document.querySelectorAll(".add-to-basket");
   addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
 };
@@ -137,9 +141,8 @@ categoriesContainer.addEventListener("click", (e) => {
 });
 
 const init = () => {
-  displayItems(data);
+  displayItems(getSearchResultPage(data, 1));
   renderCateogires();
   rangePrice();
 };
-
 init();
