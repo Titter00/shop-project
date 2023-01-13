@@ -9,7 +9,7 @@
 * [Authors](#authors)
 
 ## General info
-Simple learning shop project. 
+Simple store project created while learning the technologies learned so far. 
 
 ## Live
 
@@ -34,4 +34,4 @@ Project is created with:
 * make project responsive
 
 ## Authors
-* @oliwerwojtas
+* Oliwer Wojtaś
