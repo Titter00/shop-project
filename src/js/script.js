@@ -1,5 +1,5 @@
 import { data } from "./data.js";
-import { state, getSearchResultPage } from "./pagination";
+import { state, getSearchResultPage, generateMarkup } from "./pagination";
 
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
@@ -142,6 +142,7 @@ categoriesContainer.addEventListener("click", (e) => {
 
 const init = () => {
   displayItems(getSearchResultPage(data, 1));
+  generateMarkup(data);
   renderCateogires();
   rangePrice();
 };

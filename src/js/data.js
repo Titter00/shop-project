@@ -6,6 +6,7 @@ export const data = [
     price: 3999,
     cat: "Computers",
   },
+
   {
     id: 2,
     name: "Next Level Racing Kokpit GTTrack (NLR-S009)",
