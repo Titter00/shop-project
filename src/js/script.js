@@ -9,6 +9,7 @@ const basketClearBtn = document.querySelector(".header__list-clear");
 const priceRange = document.querySelector(".price__range");
 const priceValue = document.querySelector(".price__value");
 const header = document.querySelector(".header");
+const pagination = document.querySelector(".pagination__button--right");
 
 let addToBasketButtons;
 let basket = [];
@@ -110,7 +111,12 @@ const rangePrice = () => {
     productContainer.innerHTML = "";
     priceValue.textContent = e.target.value + "zł";
 
-    displayItems(data.filter((item) => item.price <= e.target.value));
+    displayItems(
+      getSearchResultPage(
+        data.filter((item) => item.price <= e.target.value),
+        1
+      )
+    );
   });
 };
 //
@@ -136,14 +142,21 @@ categoriesContainer.addEventListener("click", (e) => {
   const selectedCategory = e.target.textContent;
 
   selectedCategory === "Wszystkie"
-    ? displayItems(data)
-    : displayItems(data.filter((item) => item.cat === selectedCategory));
+    ? displayItems(getSearchResultPage(data, 1))
+    : displayItems(
+        getSearchResultPage(
+          data.filter((item) => item.cat === selectedCategory),
+          1
+        )
+      );
 });
 
 const init = () => {
   displayItems(getSearchResultPage(data, 1));
-  generateMarkup(data);
+
   renderCateogires();
   rangePrice();
 };
 init();
+
+pagination.addEventListener("click", generateMarkup(data));
