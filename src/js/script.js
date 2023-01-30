@@ -34,9 +34,9 @@ headerObserver.observe(header);
 
 const addToBasket = (e) => {
   const productId = parseInt(e.target.dataset.id);
-  console.log(productId);
+
   const key = data.findIndex((product) => product.id === productId);
-  console.log(key);
+
   basket.push(data.at(key)).toFixed(2);
 
   const totalPrice = basket
