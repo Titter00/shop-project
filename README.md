@@ -12,6 +12,7 @@
 Simple store project created while learning the technologies learned so far. 
 
 ## Live
+https://shop-project-oliwerwojtas.netlify.app/
 
 ## Screens
 ![image](https://user-images.githubusercontent.com/72667760/212373551-64cc655e-e835-48cc-a309-2f47a556184d.png)
