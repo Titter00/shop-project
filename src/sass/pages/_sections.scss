@@ -110,12 +110,12 @@
 
 .pagination {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
   justify-content: center;
   align-items: center;
-  margin-bottom: 5rem;
-  width: auto;
+  margin-bottom: 12rem;
+  // width: auto;
 
   &__container {
     display: flex;
@@ -123,17 +123,36 @@
     align-items: center;
     justify-content: center;
   }
-
   &__text {
     font-size: 2rem;
   }
-  &__button--left,
-  &__button--right {
-    display: flex;
+  &__arrow {
+  }
+  &__button {
     font-size: 1.5rem;
-    height: 2rem;
+    padding: 0.5rem 1rem;
+    border-radius: $borderRadius;
+    background: #edf2f4;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    outline: none;
     width: 4rem;
-    border-radius: 15px;
+  }
+  &__button:hover {
+    color: white;
+    background-color: #ef233c;
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 39rem) {
+  .pagination {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15rem;
   }
 }
 // @media only screen and (min-width: 1300px) {

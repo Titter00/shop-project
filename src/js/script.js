@@ -1,129 +1,76 @@
 import { data } from "./data.js";
-import { state, getSearchResultPage, generateMarkup } from "./pagination";
+import { renderCateogires } from "./categories.js";
+import { rangePrice } from "./rangePrice.js";
+import { basketClearBtn, basketAmount, addToBasket, clearBtn } from "./addToBasket.js";
+import { stickyHeader, headerObserver } from "./intersectionObserver";
 
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
 const searchInput = document.querySelector(".header__search-input");
-const basketAmount = document.querySelector(".header__list__amount");
-const basketClearBtn = document.querySelector(".header__list-clear");
-const priceRange = document.querySelector(".price__range");
-const priceValue = document.querySelector(".price__value");
-const header = document.querySelector(".header");
-const pagination = document.querySelector(".pagination__button--right");
 
 let addToBasketButtons;
-let basket = [];
-const headerHeight = header.getBoundingClientRect().height;
-console.log(state, getSearchResultPage(data, 3));
-//
-const stickyHeader = (entires) => {
-  const [entry] = entires;
 
-  if (!entry.isIntersecting) header.classList.add("sticky");
-};
-//
-//
-const headerObserver = new IntersectionObserver(stickyHeader, {
-  root: null,
-  threshold: 0,
-  rootMargin: `-${headerHeight}px`,
-});
-headerObserver.observe(header);
-//
-//
+const itemsPerPage = 6; // liczba produktów wyświetlanych na jednej stronie
+let currentPage = 1; // numer aktualnie wyświetlanej strony
 
-const addToBasket = (e) => {
-  const productId = parseInt(e.target.dataset.id);
-
-  const key = data.findIndex((product) => product.id === productId);
-
-  basket.push(data.at(key)).toFixed(2);
-
-  const totalPrice = basket
-    .reduce((sum, product) => {
-      return (sum += product.price);
-    }, 0)
-    .toFixed(2);
-
-  totalPrice > 0
-    ? basketClearBtn.classList.add("active")
-    : basketClearBtn.classList.remove("active");
-
-  basketAmount.innerHTML = `${totalPrice} zł`;
-};
-//
-//
-
-const displayItems = (items) => {
+export const displayItems = (items) => {
   productContainer.innerHTML = "";
-  items.forEach((item) => {
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = items.slice(startIndex, endIndex);
+  currentItems.forEach((item) => {
     const html = `
     <div class="product">
-          <img class="product__img" src="${item.img}" alt="Watch image" />
-          <span class="product__name">${item.name}</span>
-          <span class="product__price">${item.price} zł</span>
-          <span class="product__info">Learn more</span>
-          <div class="product__button">
-            <button data-id="${item.id}" class="add-to-basket">Dodaj do koszyka</button>
-          </div>
-        </div>
+      <img class="product__img" src="${item.img}" alt="Watch image" />
+      <span class="product__name">${item.name}</span>
+      <span class="product__price">${item.price} zł</span>
+      <span class="product__info">Learn more</span>
+      <div class="product__button">
+        <button data-id="${item.id}" class="add-to-basket">Dodaj do koszyka</button>
+      </div>
+    </div>
     `;
-
     productContainer.insertAdjacentHTML("beforeend", html);
   });
-
   addToBasketButtons = document.querySelectorAll(".add-to-basket");
   addToBasketButtons.forEach((button) => button.addEventListener("click", addToBasket));
-};
-//
 
-//
-const renderCateogires = () => {
-  const allCategories = data.map((item) => item.cat);
+  const totalPages = Math.ceil(items.length / itemsPerPage);
 
-  const categories = [
-    "Wszystkie",
-    ...allCategories.filter((item, i) => {
-      return allCategories.indexOf(item) === i;
-    }),
-  ];
-  categories.forEach((cat) => {
-    const html = `
-    <button>${cat}</button>`;
+  const paginationContainer = document.querySelector(".pagination");
+  paginationContainer.innerHTML = "";
 
-    categoriesContainer.insertAdjacentHTML("beforeend", html);
+  const previousButton = document.createElement("button");
+  previousButton.textContent = "<-";
+  previousButton.classList.add("pagination__button");
+  previousButton.disabled = currentPage === 1;
+  previousButton.addEventListener("click", () => {
+    currentPage -= 1;
+    displayItems(items);
   });
-};
-//
+  paginationContainer.appendChild(previousButton);
 
-//
-const rangePrice = () => {
-  const priceList = data.map((item) => item.price);
-  const minPrice = Math.min(...priceList);
-  const maxPrice = Math.max(...priceList);
+  // for (let i = 1; i <= totalPages; i++) {
+  //   const pageButton = document.createElement("button");
+  //   pageButton.textContent = i;
+  //   pageButton.classList.add("pagination__button");
+  //   pageButton.classList.toggle("active", currentPage === i);
+  //   pageButton.addEventListener("click", () => {
+  //     currentPage = i;
+  //     displayItems(items);
+  //   });
+  //   paginationContainer.appendChild(pageButton);
+  // }
 
-  priceRange.min = minPrice;
-  priceRange.max = maxPrice;
-  priceRange.value = maxPrice;
-  priceValue.textContent = maxPrice + "zł";
-
-  priceRange.addEventListener("input", (e) => {
-    productContainer.innerHTML = "";
-    priceValue.textContent = e.target.value + "zł";
-
-    displayItems(
-      getSearchResultPage(
-        data.filter((item) => item.price <= e.target.value),
-        1
-      )
-    );
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "->";
+  nextButton.classList.add("pagination__button");
+  nextButton.disabled = currentPage === totalPages;
+  nextButton.addEventListener("click", () => {
+    currentPage += 1;
+    displayItems(items);
   });
-};
-//
-
-const clearBtn = () => {
-  basketAmount.innerHTML = "Koszyk";
-  basket = [];
+  paginationContainer.appendChild(nextButton);
 };
 
 basketClearBtn.addEventListener("click", clearBtn);
@@ -142,21 +89,17 @@ categoriesContainer.addEventListener("click", (e) => {
   const selectedCategory = e.target.textContent;
 
   selectedCategory === "Wszystkie"
-    ? displayItems(getSearchResultPage(data, 1))
+    ? displayItems(data, 1)
     : displayItems(
-        getSearchResultPage(
-          data.filter((item) => item.cat === selectedCategory),
-          1
-        )
+        data.filter((item) => item.cat === selectedCategory),
+        1
       );
 });
 
 const init = () => {
-  displayItems(getSearchResultPage(data, 1));
+  displayItems(data);
 
-  renderCateogires();
-  rangePrice();
+  renderCateogires(data, categoriesContainer);
+  rangePrice(data, productContainer);
 };
 init();
-
-pagination.addEventListener("click", generateMarkup(data));

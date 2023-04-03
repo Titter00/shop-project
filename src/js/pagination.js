@@ -1,52 +1,55 @@
-export const state = {
-  resultsPerPage: 6,
-  page: 1,
+import { displayItems } from "./script";
+
+let currentPage = 1;
+const itemsPerPage = 6;
+const header = document.querySelector(".header");
+const headerHeight = header.getBoundingClientRect().height;
+
+export const paginateData = (items, page, perPage) => {
+  const start = (page - 1) * perPage;
+  const end = start + perPage;
+  return items.slice(start, end);
 };
 
-export const getSearchResultPage = (data, page = state.page) => {
-  state.page = page;
+export const renderPaginationButtons = (totalItems, data) => {
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const paginationContainer = document.querySelector(".pagination");
 
-  const start = (page - 1) * state.resultsPerPage;
-  const end = page * state.resultsPerPage;
-  return data.slice(start, end);
+  let buttonsHtml = "";
+  if (currentPage > 1) {
+    buttonsHtml += `<button class="pagination__button pagination__button--prev" data-page="${
+      currentPage - 1
+    }"><i class="fas fa-chevron-left"></i></button>`;
+  }
+  if (currentPage < totalPages) {
+    buttonsHtml += `<button class="pagination__button pagination__button--next" data-page="${
+      currentPage + 1
+    }"><i class="fas fa-chevron-right"></i></button>`;
+  }
+
+  paginationContainer.innerHTML = buttonsHtml;
+
+  const prevButton = document.querySelector(".pagination__button--prev");
+  if (prevButton) {
+    prevButton.addEventListener("click", () => {
+      currentPage -= 1;
+      displayItems(data);
+      window.scrollTo({
+        top: headerHeight,
+        behavior: "smooth",
+      });
+    });
+  }
+
+  const nextButton = document.querySelector(".pagination__button--next");
+  if (nextButton) {
+    nextButton.addEventListener("click", () => {
+      currentPage += 1;
+      displayItems(data);
+      window.scrollTo({
+        top: headerHeight,
+        behavior: "smooth",
+      });
+    });
+  }
 };
-
-export const generateMarkup = (data) => {
-  const numPages = Math.ceil(data.length / state.resultsPerPage);
-  const numData = state.page.data;
-  console.log(numPages);
-
-  if (numData === 1 && numPages > 1) {
-    return `
-    <div class="pagination__container">
-    <p class="pagination__text">Pagination</p>
-  <button class="pagination__button"><span>${numData + 1}</span></button>
-  
-</div>`;
-  }
-
-  if (numData === numPages && numPages > 1) {
-    return `
-    <div class="pagination__container">
-   <p class="pagination__text">Pagination</p>
- 
- <button class="pagination__button"><span>${numData - 1}</span></button>
-</div>`;
-  }
-
-  if (numData < numPages) {
-    return `
-    <div class="pagination__container">
-    <p class="pagination__text">Pagination</p>
-  <button class="pagination__button"><span>${numData - 1}</span></button>
-  <button class="pagination__button"><span>${numData + 1}</span></button>
-</div>
-`;
-  }
-
-  return "";
-};
-
-// pagination.addEventListener("click", (e) => {
-//   const btn = e.target.closest(".pagination__button");
-// });

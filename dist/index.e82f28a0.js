@@ -532,105 +532,75 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"dV6cC":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "displayItems", ()=>displayItems);
 var _dataJs = require("./data.js");
-var _pagination = require("./pagination");
+var _categoriesJs = require("./categories.js");
+var _rangePriceJs = require("./rangePrice.js");
+var _addToBasketJs = require("./addToBasket.js");
+var _intersectionObserver = require("./intersectionObserver");
 const productContainer = document.querySelector(".products");
 const categoriesContainer = document.querySelector(".categories__items");
 const searchInput = document.querySelector(".header__search-input");
-const basketAmount = document.querySelector(".header__list__amount");
-const basketClearBtn = document.querySelector(".header__list-clear");
-const priceRange = document.querySelector(".price__range");
-const priceValue = document.querySelector(".price__value");
-const header = document.querySelector(".header");
-const pagination = document.querySelector(".pagination__button--right");
 let addToBasketButtons;
-let basket = [];
-const headerHeight = header.getBoundingClientRect().height;
-console.log((0, _pagination.state), (0, _pagination.getSearchResultPage)((0, _dataJs.data), 3));
-//
-const stickyHeader = (entires)=>{
-    const [entry] = entires;
-    if (!entry.isIntersecting) header.classList.add("sticky");
-};
-//
-//
-const headerObserver = new IntersectionObserver(stickyHeader, {
-    root: null,
-    threshold: 0,
-    rootMargin: `-${headerHeight}px`
-});
-headerObserver.observe(header);
-//
-//
-const addToBasket = (e)=>{
-    const productId = parseInt(e.target.dataset.id);
-    const key = (0, _dataJs.data).findIndex((product)=>product.id === productId);
-    basket.push((0, _dataJs.data).at(key)).toFixed(2);
-    const totalPrice = basket.reduce((sum, product)=>{
-        return sum += product.price;
-    }, 0).toFixed(2);
-    totalPrice > 0 ? basketClearBtn.classList.add("active") : basketClearBtn.classList.remove("active");
-    basketAmount.innerHTML = `${totalPrice} zł`;
-};
-//
-//
+const itemsPerPage = 6; // liczba produktów wyświetlanych na jednej stronie
+let currentPage = 1; // numer aktualnie wyświetlanej strony
 const displayItems = (items)=>{
     productContainer.innerHTML = "";
-    items.forEach((item)=>{
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentItems = items.slice(startIndex, endIndex);
+    currentItems.forEach((item)=>{
         const html = `
     <div class="product">
-          <img class="product__img" src="${item.img}" alt="Watch image" />
-          <span class="product__name">${item.name}</span>
-          <span class="product__price">${item.price} zł</span>
-          <span class="product__info">Learn more</span>
-          <div class="product__button">
-            <button data-id="${item.id}" class="add-to-basket">Dodaj do koszyka</button>
-          </div>
-        </div>
+      <img class="product__img" src="${item.img}" alt="Watch image" />
+      <span class="product__name">${item.name}</span>
+      <span class="product__price">${item.price} zł</span>
+      <span class="product__info">Learn more</span>
+      <div class="product__button">
+        <button data-id="${item.id}" class="add-to-basket">Dodaj do koszyka</button>
+      </div>
+    </div>
     `;
         productContainer.insertAdjacentHTML("beforeend", html);
     });
     addToBasketButtons = document.querySelectorAll(".add-to-basket");
-    addToBasketButtons.forEach((button)=>button.addEventListener("click", addToBasket));
-};
-//
-//
-const renderCateogires = ()=>{
-    const allCategories = (0, _dataJs.data).map((item)=>item.cat);
-    const categories = [
-        "Wszystkie",
-        ...allCategories.filter((item, i)=>{
-            return allCategories.indexOf(item) === i;
-        })
-    ];
-    categories.forEach((cat)=>{
-        const html = `
-    <button>${cat}</button>`;
-        categoriesContainer.insertAdjacentHTML("beforeend", html);
+    addToBasketButtons.forEach((button)=>button.addEventListener("click", (0, _addToBasketJs.addToBasket)));
+    const totalPages = Math.ceil(items.length / itemsPerPage);
+    const paginationContainer = document.querySelector(".pagination");
+    paginationContainer.innerHTML = "";
+    const previousButton = document.createElement("button");
+    previousButton.textContent = "<-";
+    previousButton.classList.add("pagination__button");
+    previousButton.disabled = currentPage === 1;
+    previousButton.addEventListener("click", ()=>{
+        currentPage -= 1;
+        displayItems(items);
     });
-};
-//
-//
-const rangePrice = ()=>{
-    const priceList = (0, _dataJs.data).map((item)=>item.price);
-    const minPrice = Math.min(...priceList);
-    const maxPrice = Math.max(...priceList);
-    priceRange.min = minPrice;
-    priceRange.max = maxPrice;
-    priceRange.value = maxPrice;
-    priceValue.textContent = maxPrice + "zł";
-    priceRange.addEventListener("input", (e)=>{
-        productContainer.innerHTML = "";
-        priceValue.textContent = e.target.value + "zł";
-        displayItems((0, _pagination.getSearchResultPage)((0, _dataJs.data).filter((item)=>item.price <= e.target.value), 1));
+    paginationContainer.appendChild(previousButton);
+    // for (let i = 1; i <= totalPages; i++) {
+    //   const pageButton = document.createElement("button");
+    //   pageButton.textContent = i;
+    //   pageButton.classList.add("pagination__button");
+    //   pageButton.classList.toggle("active", currentPage === i);
+    //   pageButton.addEventListener("click", () => {
+    //     currentPage = i;
+    //     displayItems(items);
+    //   });
+    //   paginationContainer.appendChild(pageButton);
+    // }
+    const nextButton = document.createElement("button");
+    nextButton.textContent = "->";
+    nextButton.classList.add("pagination__button");
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener("click", ()=>{
+        currentPage += 1;
+        displayItems(items);
     });
+    paginationContainer.appendChild(nextButton);
 };
-//
-const clearBtn = ()=>{
-    basketAmount.innerHTML = "Koszyk";
-    basket = [];
-};
-basketClearBtn.addEventListener("click", clearBtn);
+(0, _addToBasketJs.basketClearBtn).addEventListener("click", (0, _addToBasketJs.clearBtn));
 searchInput.addEventListener("keyup", (e)=>{
     productContainer.innerHTML = "";
     const value = e.target.value.toLowerCase();
@@ -639,17 +609,16 @@ searchInput.addEventListener("keyup", (e)=>{
 categoriesContainer.addEventListener("click", (e)=>{
     productContainer.innerHTML = "";
     const selectedCategory = e.target.textContent;
-    selectedCategory === "Wszystkie" ? displayItems((0, _pagination.getSearchResultPage)((0, _dataJs.data), 1)) : displayItems((0, _pagination.getSearchResultPage)((0, _dataJs.data).filter((item)=>item.cat === selectedCategory), 1));
+    selectedCategory === "Wszystkie" ? displayItems((0, _dataJs.data), 1) : displayItems((0, _dataJs.data).filter((item)=>item.cat === selectedCategory), 1);
 });
 const init = ()=>{
-    displayItems((0, _pagination.getSearchResultPage)((0, _dataJs.data), 1));
-    renderCateogires();
-    rangePrice();
+    displayItems((0, _dataJs.data));
+    (0, _categoriesJs.renderCateogires)((0, _dataJs.data), categoriesContainer);
+    (0, _rangePriceJs.rangePrice)((0, _dataJs.data), productContainer);
 };
 init();
-pagination.addEventListener("click", (0, _pagination.generateMarkup)((0, _dataJs.data)));
 
-},{"./data.js":"kq51T","./pagination":"9j1Dd"}],"kq51T":[function(require,module,exports) {
+},{"./data.js":"kq51T","./categories.js":"9P53f","./rangePrice.js":"1W4Hb","./addToBasket.js":"3yLEQ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./intersectionObserver":"TH3Oq"}],"kq51T":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "data", ()=>data);
@@ -749,49 +718,93 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"9j1Dd":[function(require,module,exports) {
+},{}],"9P53f":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "state", ()=>state);
-parcelHelpers.export(exports, "getSearchResultPage", ()=>getSearchResultPage);
-parcelHelpers.export(exports, "generateMarkup", ()=>generateMarkup);
-const state = {
-    resultsPerPage: 6,
-    page: 1
+parcelHelpers.export(exports, "renderCateogires", ()=>renderCateogires);
+const renderCateogires = (data, categoriesContainer)=>{
+    const allCategories = data.map((item)=>item.cat);
+    const categories = [
+        "Wszystkie",
+        ...allCategories.filter((item, i)=>{
+            return allCategories.indexOf(item) === i;
+        })
+    ];
+    categories.forEach((cat)=>{
+        const html = `
+      <button>${cat}</button>`;
+        categoriesContainer.insertAdjacentHTML("beforeend", html);
+    });
 };
-const getSearchResultPage = (data, page = state.page)=>{
-    state.page = page;
-    const start = (page - 1) * state.resultsPerPage;
-    const end = page * state.resultsPerPage;
-    return data.slice(start, end);
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1W4Hb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "rangePrice", ()=>rangePrice);
+var _script = require("./script");
+const rangePrice = (data, productContainer)=>{
+    const priceRange = document.querySelector(".price__range");
+    const priceValue = document.querySelector(".price__value");
+    const priceList = data.map((item)=>item.price);
+    const minPrice = Math.min(...priceList);
+    const maxPrice = Math.max(...priceList);
+    priceRange.min = minPrice;
+    priceRange.max = maxPrice;
+    priceRange.value = maxPrice;
+    priceValue.textContent = maxPrice + "zł";
+    priceRange.addEventListener("input", (e)=>{
+        productContainer.innerHTML = "";
+        priceValue.textContent = e.target.value + "zł";
+        (0, _script.displayItems)(data.filter((item)=>item.price <= e.target.value), 1);
+    });
 };
-const generateMarkup = (data)=>{
-    const numPages = Math.ceil(data.length / state.resultsPerPage);
-    const numData = state.page.data;
-    console.log(numPages);
-    if (numData === 1 && numPages > 1) return `
-    <div class="pagination__container">
-    <p class="pagination__text">Pagination</p>
-  <button class="pagination__button"><span>${numData + 1}</span></button>
-  
-</div>`;
-    if (numData === numPages && numPages > 1) return `
-    <div class="pagination__container">
-   <p class="pagination__text">Pagination</p>
- 
- <button class="pagination__button"><span>${numData - 1}</span></button>
-</div>`;
-    if (numData < numPages) return `
-    <div class="pagination__container">
-    <p class="pagination__text">Pagination</p>
-  <button class="pagination__button"><span>${numData - 1}</span></button>
-  <button class="pagination__button"><span>${numData + 1}</span></button>
-</div>
-`;
-    return "";
-}; // pagination.addEventListener("click", (e) => {
- //   const btn = e.target.closest(".pagination__button");
- // });
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./script":"dV6cC"}],"3yLEQ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "basketClearBtn", ()=>basketClearBtn);
+parcelHelpers.export(exports, "basketAmount", ()=>basketAmount);
+parcelHelpers.export(exports, "addToBasket", ()=>addToBasket);
+parcelHelpers.export(exports, "clearBtn", ()=>clearBtn);
+var _data = require("./data");
+const basketClearBtn = document.querySelector(".header__list-clear");
+const basketAmount = document.querySelector(".header__list-amount");
+let basket = [];
+const addToBasket = (e)=>{
+    const productId = parseInt(e.target.dataset.id);
+    const key = (0, _data.data).findIndex((product)=>product.id === productId);
+    basket.push((0, _data.data).at(key)).toFixed(2);
+    const totalPrice = basket.reduce((sum, product)=>{
+        return sum += product.price;
+    }, 0).toFixed(2);
+    totalPrice > 0 && basketClearBtn.classList.add("active");
+    basketAmount.innerHTML = `${totalPrice} zł`;
+};
+const clearBtn = ()=>{
+    if (basketAmount) {
+        basketAmount.innerHTML = "Koszyk";
+        basketClearBtn.classList.remove("active");
+    }
+    basket = [];
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./data":"kq51T"}],"TH3Oq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "stickyHeader", ()=>stickyHeader);
+parcelHelpers.export(exports, "headerObserver", ()=>headerObserver);
+const header = document.querySelector(".header");
+const headerHeight = header.getBoundingClientRect().height;
+const stickyHeader = (entries)=>{
+    const [entry] = entries;
+    if (!entry.isIntersecting) header.classList.add("sticky");
+};
+const headerObserver = new IntersectionObserver(stickyHeader, {
+    root: null,
+    threshold: 0,
+    rootMargin: `-${headerHeight}px`
+});
+headerObserver.observe(header);
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["eZyLq","dV6cC"], "dV6cC", "parcelRequire29c1")
 

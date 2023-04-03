@@ -117,12 +117,12 @@ body {
   display: flex;
 }
 
-.header__list__amount {
+.header__list-amount {
   width: max-content;
   display: flex;
 }
 
-.header__list__icon {
+.header__list-icon {
   width: 3.5rem;
   height: 3.5rem;
 }
@@ -166,12 +166,12 @@ body {
     display: flex;
   }
 
-  .header__list__icon {
+  .header__list-icon {
     width: 2.5rem;
     height: 2.5rem;
   }
 
-  .header__list__amount {
+  .header__list-amount {
     font-size: 1.7rem;
   }
 
@@ -418,11 +418,10 @@ footer .wave.wave4 {
 }
 
 .pagination {
-  width: auto;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5rem;
+  margin-bottom: 12rem;
   display: flex;
 }
 
@@ -437,12 +436,31 @@ footer .wave.wave4 {
   font-size: 2rem;
 }
 
-.pagination__button--left, .pagination__button--right {
-  height: 2rem;
+.pagination__button {
   width: 4rem;
+  background: #edf2f4;
+  border: none;
   border-radius: 15px;
+  outline: none;
+  padding: .5rem 1rem;
   font-size: 1.5rem;
-  display: flex;
+  transition: all .3s ease-in-out;
+}
+
+.pagination__button:hover {
+  color: #fff;
+  cursor: pointer;
+  background-color: #ef233c;
+}
+
+@media only screen and (max-width: 39rem) {
+  .pagination {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15rem;
+    display: flex;
+  }
 }
 
 @media only screen and (min-width: 1300px) {

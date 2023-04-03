@@ -1,21 +1,28 @@
 {
   "name": "shop-project",
   "version": "1.0.0",
+  "homepage": "https://oliwerwojtas.github.io/shop-project/",
   "description": "",
   "default": "./src/js/script.js",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.2",
+    "cypress": "^12.9.0",
     "node-sass": "^8.0.0",
     "parcel": "^2.8.2",
     "parcel-reporter-static-files-copy": "^1.4.0"
   },
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html --dist-dir ./dist"
+    "build": "parcel build index.html --dist-dir ./dist",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages build"
   },
   "author": "Oliwer",
   "license": "ISC",
   "staticFiles": {
     "staticPath": "images"
+  },
+  "dependencies": {
+    "gh-pages": "^5.0.0"
   }
 }

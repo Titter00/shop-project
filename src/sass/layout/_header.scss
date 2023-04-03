@@ -81,12 +81,12 @@
     font-weight: 500;
     gap: 1rem;
 
-    &__amount {
+    &-amount {
       display: flex;
       width: max-content;
     }
 
-    &__icon {
+    &-icon {
       width: 3.5rem;
       height: 3.5rem;
     }
@@ -129,11 +129,11 @@
       width: 20rem;
     }
     &__list {
-      &__icon {
+      &-icon {
         width: 2.5rem;
         height: 2.5rem;
       }
-      &__amount {
+      &-amount {
         font-size: 1.7rem;
       }
     }
