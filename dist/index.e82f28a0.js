@@ -571,9 +571,12 @@ const displayItems = (items)=>{
     const paginationContainer = document.querySelector(".pagination");
     paginationContainer.innerHTML = "";
     const previousButton = document.createElement("button");
-    previousButton.textContent = "<-";
     previousButton.classList.add("pagination__button");
     previousButton.disabled = currentPage === 1;
+    const img = document.createElement("img");
+    img.src = "./arrow-left-solid.svg";
+    img.alt = "Previous Page";
+    previousButton.appendChild(img);
     previousButton.addEventListener("click", ()=>{
         currentPage -= 1;
         displayItems(items);
@@ -591,9 +594,12 @@ const displayItems = (items)=>{
     //   paginationContainer.appendChild(pageButton);
     // }
     const nextButton = document.createElement("button");
-    nextButton.textContent = "->";
     nextButton.classList.add("pagination__button");
     nextButton.disabled = currentPage === totalPages;
+    const img2 = document.createElement("img");
+    img2.src = "./arrow-right-solid.svg";
+    img2.alt = "Previous Page";
+    nextButton.appendChild(img2);
     nextButton.addEventListener("click", ()=>{
         currentPage += 1;
         displayItems(items);

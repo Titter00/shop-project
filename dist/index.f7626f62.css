@@ -421,7 +421,6 @@ footer .wave.wave4 {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 12rem;
   display: flex;
 }
 
@@ -438,6 +437,7 @@ footer .wave.wave4 {
 
 .pagination__button {
   width: 4rem;
+  color: #fff;
   background: #edf2f4;
   border: none;
   border-radius: 15px;
@@ -448,14 +448,13 @@ footer .wave.wave4 {
 }
 
 .pagination__button:hover {
-  color: #fff;
   cursor: pointer;
   background-color: #ef233c;
 }
 
 @media only screen and (max-width: 39rem) {
   .pagination {
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     margin-bottom: 15rem;
