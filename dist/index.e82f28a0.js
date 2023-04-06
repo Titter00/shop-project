@@ -553,13 +553,13 @@ const displayItems = (items)=>{
     const currentItems = items.slice(startIndex, endIndex);
     currentItems.forEach((item)=>{
         const html = `
-    <div class="product">
+    <div class="product" data-cy="product">
       <img class="product__img" src="${item.img}" alt="Watch image" />
       <span class="product__name">${item.name}</span>
-      <span class="product__price">${item.price} zł</span>
+      <span class="product__price" data-cy="product-price">${item.price} zł</span>
       <span class="product__info">Learn more</span>
       <div class="product__button">
-        <button data-id="${item.id}" class="add-to-basket">Dodaj do koszyka</button>
+        <button data-id="${item.id}" class="add-to-basket" data-cy="add-basket">Dodaj do koszyka</button>
       </div>
     </div>
     `;
@@ -572,6 +572,7 @@ const displayItems = (items)=>{
     paginationContainer.innerHTML = "";
     const previousButton = document.createElement("button");
     previousButton.classList.add("pagination__button");
+    previousButton.setAttribute("data-cy", "pagination-button");
     previousButton.disabled = currentPage === 1;
     const img = document.createElement("img");
     img.src = "./arrow-left-solid.svg";
@@ -595,6 +596,7 @@ const displayItems = (items)=>{
     // }
     const nextButton = document.createElement("button");
     nextButton.classList.add("pagination__button");
+    nextButton.setAttribute("data-cy", "pagination-button");
     nextButton.disabled = currentPage === totalPages;
     const img2 = document.createElement("img");
     img2.src = "./arrow-right-solid.svg";
@@ -738,7 +740,7 @@ const renderCateogires = (data, categoriesContainer)=>{
     ];
     categories.forEach((cat)=>{
         const html = `
-      <button>${cat}</button>`;
+      <button data-cy="categories-button">${cat}</button>`;
         categoriesContainer.insertAdjacentHTML("beforeend", html);
     });
 };

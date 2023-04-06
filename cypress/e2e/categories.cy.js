@@ -6,19 +6,19 @@ describe("Price range functionality", () => {
   });
 
   it("Renders the categories section", () => {
-    cy.get(".categories__title").should("contain.text", "Watch our");
-    cy.get(".categories__title span").should("have.text", "collection.");
-    cy.get(".categories__items").should("exist");
+    cy.get("[data-cy='categories-title']").should("contain.text", "Watch our");
+    cy.get("[data-cy='categories-title--span']").should("have.text", "collection.");
+    cy.get("[data-cy='categories-items']").should("exist");
   });
 
   it("Renders all categories and 'Wszystkie' button", () => {
     const allCategories = ["Computers", "Gaming", "Home", "Foto and Camera", "TV"];
     const expectedCategories = ["Wszystkie", ...allCategories];
 
-    cy.get(".categories__items button").should("have.length", expectedCategories.length);
+    cy.get("[data-cy='categories-button']").should("have.length", expectedCategories.length);
 
     expectedCategories.forEach((cat) => {
-      cy.get(".categories__items button").should("contain.text", cat);
+      cy.get("[data-cy='categories-button']").should("contain.text", cat);
     });
   });
 
@@ -29,7 +29,10 @@ describe("Price range functionality", () => {
       const items = data.filter((item) => item.cat === cat);
       const expectedCount = items.length > 0 ? 1 : 0;
 
-      cy.get(`.categories__items button:contains("${cat}")`).should("have.length", expectedCount);
+      cy.get(`[data-cy='categories-button']:contains("${cat}")`).should(
+        "have.length",
+        expectedCount
+      );
     });
   });
 
@@ -39,8 +42,8 @@ describe("Price range functionality", () => {
 
     const expectedItems = data.filter((item) => item.cat === selectedCategory);
 
-    cy.get(`.categories__items button:contains("${selectedCategory}")`).click();
+    cy.get(`[data-cy='categories-button']:contains("${selectedCategory}")`).click();
 
-    cy.get(".product").should("have.length", expectedItems.length);
+    cy.get("[data-cy='product']").should("have.length", expectedItems.length);
   });
 });

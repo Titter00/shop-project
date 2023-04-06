@@ -452,13 +452,9 @@ footer .wave.wave4 {
   background-color: #ef233c;
 }
 
-@media only screen and (max-width: 39rem) {
+@media only screen and (max-width: 90rem) {
   .pagination {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     margin-bottom: 15rem;
-    display: flex;
   }
 }
 

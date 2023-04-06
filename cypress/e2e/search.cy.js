@@ -5,30 +5,30 @@ describe("E2E - search input cases", () => {
     cy.visit("/");
   });
   it("should display search input field", () => {
-    cy.get(".header__search").within(() => {
-      cy.get(".header__search-input")
+    cy.get("[data-cy='header-search']").within(() => {
+      cy.get("[data-cy='header-input']")
         .should("be.visible")
         .should("have.attr", "placeholder", "Wyszukaj w sklepie...");
-      cy.get(".header__search__icon img")
+      cy.get("[data-cy='header-input--img']")
         .should("be.visible")
         .should("have.attr", "alt", "Shopping basket");
     });
   });
 
   it("displays all products when search input is empty", () => {
-    cy.get(".header__search-input").type("{enter}");
-    cy.get(".product").should("have.length", 6);
+    cy.get("[data-cy='header-input']").type("{enter}");
+    cy.get("[data-cy='product']").should("have.length", 6);
   });
   it("displays only matching products when search input is not empty", () => {
     const searchTerm = "Laptop";
-    cy.get(".header__search-input").type(searchTerm);
-    cy.get(".product")
+    cy.get("[data-cy='header-input']").type(searchTerm);
+    cy.get("[data-cy='product']")
       .should("have.length", 4)
       .each((list) => {
         cy.wrap([...list].slice(0, 4))
           .contains(searchTerm)
           .should("be.visible");
       });
-    cy.get(".header__search-input").clear();
+    cy.get("[data-cy='header-input']").clear();
   });
 });

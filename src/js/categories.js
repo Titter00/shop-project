@@ -9,7 +9,7 @@ export const renderCateogires = (data, categoriesContainer) => {
   ];
   categories.forEach((cat) => {
     const html = `
-      <button>${cat}</button>`;
+      <button data-cy="categories-button">${cat}</button>`;
 
     categoriesContainer.insertAdjacentHTML("beforeend", html);
   });

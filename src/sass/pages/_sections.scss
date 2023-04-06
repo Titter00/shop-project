@@ -115,7 +115,6 @@
   justify-content: center;
   align-items: center;
   // margin-bottom: 12rem;
-  // width: auto;
 
   &__container {
     display: flex;
@@ -144,17 +143,16 @@
   }
 }
 
-@media only screen and (max-width: 39rem) {
+// @media only screen and (max-width: 30rem) {
+//   .pagination {
+//     margin-bottom: 15rem;
+//   }
+// }
+@media only screen and (max-width: 90rem) {
   .pagination {
-    display: flex;
-    flex-direction: row;
-
-    justify-content: center;
-    align-items: center;
     margin-bottom: 15rem;
   }
 }
-
 // @media only screen and (min-width: 1300px) {
 //   .container {
 //     display: flex;

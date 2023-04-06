@@ -9,14 +9,14 @@
     <title>Shop</title>
   </head>
   <body>
-    <header class="header ">
-      <div class="header__container">
-        <h1 class="header__title"><span>Shop</span></h1>
-        <div class="header__search">
-          <div class="header__search__icon">
-            <input type="text" class="header__search-input" placeholder="Wyszukaj w sklepie..." />
+    <header class="header" data-cy="header">
+      <div class="header__container" data-cy="header-container">
+        <h1 class="header__title" data-cy="header-title"><span>Shop</span></h1>
+        <div class="header__search" data-cy="header-search">
+          <div class="header__search__icon" data-cy="header-icon">
+            <input type="text" class="header__search-input" data-cy="header-input" placeholder="Wyszukaj w sklepie..." />
 
-            <img src="./images/lupa.svg" alt="Shopping basket" />
+            <img src="./images/lupa.svg" alt="Shopping basket" data-cy="header-input--img"/>
           </div>
         </div>
         <div class="header__icons">
@@ -30,7 +30,7 @@
               src="./images/shopping-basket-svgrepo-com.svg"
               alt="Search icon"
             />
-            <p class="header__list-amount">Koszyk</p>
+            <p class="header__list-amount" data-cy="header-amount">Koszyk</p>
             <button class="header__list-clear">x</button>
           </div>
         </div>
@@ -42,17 +42,17 @@
 
     <main class="container">
       <section class="categories">
-        <h2 class="categories__title">Watch our <span>collection.</span></h2>
-        <div class="categories__items">
+        <h2 class="categories__title" data-cy="categories-title">Watch our <span data-cy="categories-title--span">collection.</span></h2>
+        <div class="categories__items" data-cy="categories-items">
         
         </div>
         <div class="price">
-          <input type="range" class="price__range" />
-          <span class="price__value"></span>
+          <input type="range" class="price__range" data-cy="price-range"/>
+          <span class="price__value" data-cy="price-value"></span>
         </div>
       </section>
 
-      <section class="products"></section>
+      <section class="products" data-cy="products"></section>
       <section class="pagination">
         <div class="pagination__container">
           

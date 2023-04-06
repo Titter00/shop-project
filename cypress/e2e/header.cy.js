@@ -6,20 +6,19 @@ describe("E2E - Home Page", () => {
   });
 
   it("should be visible", () => {
-    cy.get(".header__container").should("be.visible");
+    cy.get("[data-cy='header-container']").should("be.visible");
   });
 
   it("should contain header elements", () => {
-    cy.get(".header__container").within(() => {
-      cy.get(".header__title").should("exist");
-      cy.get(".header__search").should("exist");
-      cy.get(".header__icons").should("exist");
-      cy.get(".header__search-input").should("exist");
+    cy.get("[data-cy='header-container']").within(() => {
+      cy.get("[data-cy='header-title']").should("exist");
+      cy.get("[data-cy='header-icon']").should("exist");
+      cy.get("[data-cy='header-input']").should("exist");
     });
   });
 
-  it("Should open home page - auto", () => {
-    cy.get("h1")
+  it("should return correct h1 values", () => {
+    cy.get("[data-cy='header-title']")
       .should("have.length", 1)
       .find("span")
       .should("have.css", "color", "rgb(217, 4, 41)")
