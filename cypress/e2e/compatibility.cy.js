@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import ProductPage from "../support/page-object/productPage";
 
 describe("compatibility tests", () => {
   it("displays properly in Chrome, Firefox, and Edge", () => {
@@ -8,7 +9,7 @@ describe("compatibility tests", () => {
         browser: browser,
         chromeWebSecurity: false,
       });
-      cy.get("[data-cy='products']").should("be.visible");
+      ProductPage.elements.products().should("be.visible");
     });
   });
 });

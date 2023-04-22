@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+import HeaderPage from "../support/page-object/headerPage";
 
 describe("E2E - Home Page", () => {
   beforeEach(() => {
@@ -6,19 +7,20 @@ describe("E2E - Home Page", () => {
   });
 
   it("should be visible", () => {
-    cy.get("[data-cy='header-container']").should("be.visible");
+    HeaderPage.elements.container().should("be.visible");
   });
 
   it("should contain header elements", () => {
-    cy.get("[data-cy='header-container']").within(() => {
-      cy.get("[data-cy='header-title']").should("exist");
-      cy.get("[data-cy='header-icon']").should("exist");
-      cy.get("[data-cy='header-input']").should("exist");
+    HeaderPage.elements.container().within(() => {
+      HeaderPage.elements.title().should("exist");
+      HeaderPage.elements.icon().should("exist");
+      HeaderPage.elements.input().should("exist");
     });
   });
 
   it("should return correct h1 values", () => {
-    cy.get("[data-cy='header-title']")
+    HeaderPage.elements
+      .title()
       .should("have.length", 1)
       .find("span")
       .should("have.css", "color", "rgb(217, 4, 41)")

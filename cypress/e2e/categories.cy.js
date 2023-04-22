@@ -1,38 +1,38 @@
 /// <reference types="cypress" />
+import CategoriesPage from "../support/page-object/categoriesPage";
+import ProductPage from "../support/page-object/productPage";
 import { data } from "../../src/js/data";
+
 describe("Price range functionality", () => {
   beforeEach(() => {
     cy.visit("/");
   });
 
   it("Renders the categories section", () => {
-    cy.get("[data-cy='categories-title']").should("contain.text", "Watch our");
-    cy.get("[data-cy='categories-title--span']").should("have.text", "collection.");
-    cy.get("[data-cy='categories-items']").should("exist");
+    CategoriesPage.elements.title().should("contain.text", "Watch our");
+    CategoriesPage.elements.titleSpan().should("have.text", "collection.");
+    CategoriesPage.elements.items().should("exist");
   });
 
   it("Renders all categories and 'Wszystkie' button", () => {
     const allCategories = ["Computers", "Gaming", "Home", "Foto and Camera", "TV"];
     const expectedCategories = ["Wszystkie", ...allCategories];
 
-    cy.get("[data-cy='categories-button']").should("have.length", expectedCategories.length);
+    CategoriesPage.elements.button().should("have.length", expectedCategories.length);
 
     expectedCategories.forEach((cat) => {
-      cy.get("[data-cy='categories-button']").should("contain.text", cat);
+      CategoriesPage.elements.button().should("contain.text", cat);
     });
   });
 
   it("Renders unique categories only", () => {
     const allCategories = ["Computers", "Gaming", "Home", "Foto and Camera", "TV"];
 
-    allCategories.forEach((cat) => {
-      const items = data.filter((item) => item.cat === cat);
+    allCategories.forEach((category) => {
+      const items = data.filter((item) => item.cat === category);
       const expectedCount = items.length > 0 ? 1 : 0;
 
-      cy.get(`[data-cy='categories-button']:contains("${cat}")`).should(
-        "have.length",
-        expectedCount
-      );
+      CategoriesPage.categoryButton(category).should("have.length", expectedCount);
     });
   });
 
@@ -42,8 +42,8 @@ describe("Price range functionality", () => {
 
     const expectedItems = data.filter((item) => item.cat === selectedCategory);
 
-    cy.get(`[data-cy='categories-button']:contains("${selectedCategory}")`).click();
+    CategoriesPage.categoryButton(selectedCategory).click();
 
-    cy.get("[data-cy='product']").should("have.length", expectedItems.length);
+    ProductPage.elements.product().should("have.length", expectedItems.length);
   });
 });

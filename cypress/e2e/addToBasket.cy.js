@@ -1,4 +1,6 @@
 /// <reference types="cypress" />
+import ProductPage from "../support/page-object/productPage";
+import BasketPage from "../support/page-object/baskatPage";
 
 describe("Adding a product to the basket", () => {
   beforeEach(() => {
@@ -7,19 +9,21 @@ describe("Adding a product to the basket", () => {
   it("should add a product to the basket and sum it", () => {
     let totalValue = 0;
 
-    cy.get("[data-cy='add-basket']")
+    BasketPage.elements
+      .addToBasketButton()
       .each((el) => {
         cy.wrap(el).click();
       })
       .then(() => {
-        cy.get("[data-cy='product-price']")
+        ProductPage.elements
+          .productPrice()
           .each((price) => {
             let productPrice = parseFloat(price.text());
             totalValue += productPrice;
-            cy.log(totalValue);
           })
           .then(() => {
-            cy.get("[data-cy='header-amount']")
+            BasketPage.elements
+              .amount()
               .invoke("text")
               .should("eq", `${totalValue.toFixed(2)} zł`);
           });

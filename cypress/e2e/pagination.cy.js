@@ -1,39 +1,42 @@
 /// <reference types="cypress" />
+import ProductPage from "../support/page-object/productPage";
+import PaginationPage from "../support/page-object/paginationPage";
+
 describe("Pagination functionality", () => {
   beforeEach(() => {
     cy.visit("/");
   });
   it("should display correct number of buttons", () => {
-    cy.get("[data-cy='pagination-button']").then((buttons) => {
+    PaginationPage.elements.button().then((buttons) => {
       expect(buttons.length).to.eq(2);
     });
 
-    cy.get("[data-cy='product']").then((products) => {
+    ProductPage.elements.product().then((products) => {
       expect(products.length).to.be.lte(6);
     });
 
-    cy.get("[data-cy='pagination-button']").eq(1).click();
+    PaginationPage.nextButton();
 
-    cy.get("[data-cy='product']").then((products) => {
+    ProductPage.elements.product().then((products) => {
       expect(products.length).to.be.lte(6);
     });
   });
 
   it("should navigate to next and previous page", () => {
-    cy.get("[data-cy='pagination-button']").eq(1).click();
+    PaginationPage.nextButton();
 
-    cy.get("[data-cy='pagination-button']").eq(0).click();
+    PaginationPage.previousButton();
 
-    cy.get("[data-cy='pagination-button']").eq(1).click();
+    PaginationPage.nextButton();
   });
 
   it("should disable previous button on first page", () => {
-    cy.get("[data-cy='pagination-button']").eq(0).should("be.disabled");
+    PaginationPage.elements.button().eq(0).should("be.disabled");
   });
 
   it("should disable next button on last page", () => {
-    cy.get("[data-cy='pagination-button']").eq(1).click();
+    PaginationPage.nextButton();
 
-    cy.get("[data-cy='pagination-button']").eq(1).should("be.disabled");
+    PaginationPage.elements.button().eq(1).should("be.disabled");
   });
 });

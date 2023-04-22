@@ -10,8 +10,8 @@ const searchInput = document.querySelector(".header__search-input");
 
 let addToBasketButtons;
 
-const itemsPerPage = 6; // liczba produktów wyświetlanych na jednej stronie
-let currentPage = 1; // numer aktualnie wyświetlanej strony
+const itemsPerPage = 6;
+let currentPage = 1;
 
 export const displayItems = (items) => {
   productContainer.innerHTML = "";
@@ -54,18 +54,6 @@ export const displayItems = (items) => {
     displayItems(items);
   });
   paginationContainer.appendChild(previousButton);
-
-  // for (let i = 1; i <= totalPages; i++) {
-  //   const pageButton = document.createElement("button");
-  //   pageButton.textContent = i;
-  //   pageButton.classList.add("pagination__button");
-  //   pageButton.classList.toggle("active", currentPage === i);
-  //   pageButton.addEventListener("click", () => {
-  //     currentPage = i;
-  //     displayItems(items);
-  //   });
-  //   paginationContainer.appendChild(pageButton);
-  // }
 
   const nextButton = document.createElement("button");
 
